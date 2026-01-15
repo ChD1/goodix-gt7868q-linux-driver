@@ -37,3 +37,16 @@ install-dkms:
 install-quirks:
 	# Install the custom libinput quirks file to the appropriate directory
 	install -Dm644 local-overrides.quirks /usr/share/libinput/60-custom-thinkbookg6p2024imh.quirks
+
+uninstall-dkms:
+	# Remove the DKMS module and its source tree
+	dkms remove -m goodix-gt7868q/$(VERSION) --all
+	rm -rf /usr/src/goodix-gt7868q-$(VERSION)
+
+uninstall-quirks:
+	# Remove the custom libinput quirks file
+	rm -f /usr/share/libinput/60-custom-thinkbookg6p2024imh.quirks
+
+uninstall-aur:
+	# Remove the AUR-installed package
+	pacman -R goodix-gt7868q-dkms

@@ -49,3 +49,23 @@ Adjust the default parameters to address issues with the device:
 ### Finally
 
 Restart the display manager.
+
+## Uninstallation
+
+### Remove the DKMS Install
+
+```bash
+sudo make uninstall-dkms
+```
+
+### Remove Libinput Quirks
+
+```bash
+sudo make uninstall-quirks
+```
+
+### Remove the AUR Package (if used)
+
+```bash
+sudo make uninstall-aur
+```

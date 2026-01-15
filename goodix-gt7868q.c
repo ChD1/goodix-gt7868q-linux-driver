@@ -11,6 +11,11 @@
 
 static const __u8 *goodix_gt7868q_report_fixup(struct hid_device *hdev, __u8 *rdesc, unsigned int *rsize)
 {
+    if (!rsize || *rsize <= 607) {
+        dev_info(&hdev->dev, "Report descriptor too short for fixup.\n");
+        return rdesc;
+    }
+
     if (rdesc[607] == 0x15) {
         rdesc[607] = 0x25;
         dev_info(&hdev->dev, "Report descriptor fixup is applied.\n");
