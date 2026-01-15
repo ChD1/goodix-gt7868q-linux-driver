@@ -1,7 +1,7 @@
 PWD := $(shell pwd)
 KVERSION := $(shell uname -r)
 KERNEL_DIR = /lib/modules/$(KVERSION)
-VERSION = $(shell git describe --abbrev=0)
+VERSION = $(shell git describe --tags --abbrev=0 2>/dev/null || git describe --tags --always 2>/dev/null || echo "0.0.0")
 MODULE_NAME = goodix-gt7868q
 obj-m := $(MODULE_NAME).o
 
@@ -25,6 +25,8 @@ install-aur:
 	cd aur && makepkg -i
 
 install-dkms:
+	# Ensure dkms is available
+	command -v dkms >/dev/null 2>&1 || { echo "dkms is not installed. Install it with: sudo apt install dkms (Debian/Ubuntu) or sudo pacman -S dkms (Arch)"; exit 1; }
 	# Install the DKMS configuration file to the appropriate directory
 	install -Dm644 dkms/dkms.conf /usr/src/goodix-gt7868q-$(VERSION)/dkms.conf
 	# Copy the source to the DKMS source directory
