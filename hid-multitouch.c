@@ -48,9 +48,11 @@ MODULE_LICENSE("GPL");
 
 #include "hid-ids.h"
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 16, 0)
-
+#ifndef timer_container_of
 #define timer_container_of from_timer
+#endif
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 14, 0)
 
 static inline int timer_delete(struct timer_list *timer)
 {
